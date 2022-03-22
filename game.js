@@ -1,7 +1,7 @@
 const innerBoxStyles = ['in-tl','in-tm','in-tr','in-ml','in-mm','in-mr','in-bl','in-bm','in-br']
 
 class Game {
-    constructor(player1, player2) {
+    constructor(player1, player2, ai) {
         this.width = canvas.width
         this.height = canvas.height
         this.player1 = player1
@@ -12,6 +12,7 @@ class Game {
         // winCombines = '123', '456', '147'
         this.p1Combines = []
         this.p2Combines = []
+        this.ai = ai
     }
 
     drawBackground = () => {
@@ -79,10 +80,15 @@ class Game {
             if (this.isPlayer1Round) {
                 this.isPlayer1Round = false
                 this.player1.input(elementID)
+                if (this.ai != null) {
+                    this.ai.updateCurrentPlayer()
+                }
             } else {
                 this.isPlayer1Round = true
                 this.player2.input(elementID)
             }
+
+            thisBlock.value = (this.isPlayer1Round && this.ai != null) ? this.ai.updateCurrentPlayer(this.player2.getIcon()) : this.ai.updateCurrentPlayer(this.player1.getIcon())
         } catch(ex) {
             console.log(ex)
         }

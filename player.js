@@ -1,9 +1,14 @@
 class Player {
-    constructor(icon, color) {
+    constructor(icon, color, ai) {
         this.icon = icon
         this.color = color
         this.height = 100
         this.width = 100
+        this.ai = ai
+
+        if (this.ai != null) {
+            this.ai.aiOnTracker()
+        }
     }
 
     paint = (x, y) => {
